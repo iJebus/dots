@@ -1,0 +1,26 @@
+---
+- name: install prerequisite goodness
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+  with_items:
+    - software-properties-common
+    - dirmngr
+    - apt-transport-https
+
+- name: Add kr apt key
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: C4A05888A1C4FA02E1566F859F2A29A569653940
+
+- name: install kr repo
+  apt_repository:
+    repo: 'deb http://kryptco.github.io/deb kryptco main'
+    state: present
+
+- name: install package goodness
+  apt:
+    name: kr
+    state: latest
+    update_cache: true

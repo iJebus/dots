@@ -13,6 +13,7 @@
     - { role: asdf, tags: 'asdf' }
     - { role: keybase, tags: 'keybase' }
     - { role: exa, tags: 'exa' }
+    - { role: kr, tags: 'kr' }
 
   tasks:
     - name: upgrade system and existing packages
