@@ -1,3 +1,4 @@
+---
 - name: install required apt repos
   apt_repository:
     repo: 'ppa:ubuntu-mozilla-daily/firefox-aurora'
@@ -5,8 +6,6 @@
 
 - name: install package goodness
   apt:
-    name: "{{ item }}"
+    name: firefox
     state: latest
     update_cache: true
-  with_items:
-    - firefox
