@@ -1,0 +1,21 @@
+---
+- name: install zsh
+  apt:
+    name: zsh
+    state: present
+  register: zsh
+
+- name: install ohmyzsh
+  become: false
+  shell: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
+  args:
+    creates: ~/.oh-my-zsh
+  when: zsh|changed
+
+- name: assumes username is liam, proceed?
+  pause:
+  when: zsh|changed
+
+- name: set default shell
+  command: chsh -s /usr/bin/zsh liam
+  when: zsh|changed

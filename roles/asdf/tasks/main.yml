@@ -1,0 +1,65 @@
+---
+- name: fetch asdf repo
+  become: false
+  git:
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: ~/.asdf
+    version: v0.4.0
+
+- name: install recommended apt packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - automake
+    - autoconf
+    - libreadline-dev
+    - libncurses-dev
+    - libssl-dev
+    - libyaml-dev
+    - libxslt-dev
+    - libffi-dev
+    - libtool
+    - unixodbc-dev
+
+- name: source in zshrc
+  become: false
+  blockinfile:
+    path: ~/.zshrc
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - asdf"
+    block: |
+      . $HOME/.asdf/asdf.sh
+      . $HOME/.asdf/completions/asdf.bash
+
+- name: add plugins
+  become: false
+  shell: asdf plugin-add "{{ item }}"
+  args:
+    executable: /usr/bin/zsh
+  with_items:
+    - golang
+    - nodejs
+  ignore_errors: true
+
+- name: import openpgp keys for nodejs
+  become: false
+  shell: bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+
+- name: install languages
+  become: false
+  shell: asdf install "{{ item }}"
+  args:
+    executable: /usr/bin/zsh
+  with_items:
+    - golang {{ golang_version }}
+    - nodejs {{ nodejs_version }}
+  ignore_errors: true
+
+- name: set languages as global defaults
+  become: false
+  blockinfile:
+    path: ~/.tool-versions
+    create: true
+    block: |
+      golang {{ golang_version }}
+      nodejs {{ nodejs_version }}

@@ -1,0 +1,46 @@
+- name: install required apt repos
+  apt_repository:
+    repo: 'ppa:neovim-ppa/stable'
+    state: present
+
+- name: install package goodness
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+  with_items:
+    # - fonts-hack-ttf # tasty font
+    - neovim
+    - python-dev
+    - python3-dev
+    - python-pip
+    - python3-pip
+
+- name: install neovim pip packages
+  pip:
+    name: neovim
+
+- name: create config folder
+  become: false
+  file:
+    path: ~/.config/nvim/
+    state: directory
+    recurse: true
+
+- name: install configs
+  become: false
+  copy:
+    src: generate.vim
+    dest: ~/.config/nvim/init.vim
+
+- name: update shells for neovim (https://github.com/neovim/neovim/issues/5990)
+  lineinfile:
+    path: "{{ item }}"
+    line: 'export VTE_VERSION="100"'
+  with_items:
+    - /etc/zsh/zshenv
+    - /etc/profile
+
+- name: install plugins
+  become: false
+  command: vim +PlugInstall +qall

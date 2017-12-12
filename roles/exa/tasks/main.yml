@@ -1,0 +1,16 @@
+---
+- name: download and extract exa
+  unarchive:
+    src: https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip
+    dest: /usr/local/bin/
+    remote_src: true
+
+- name: update ls alias
+  become: false
+  blockinfile:
+    path: ~/.zshrc
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - exa"
+    block: |
+      alias ls="/usr/local/bin/exa-linux-x86_64"
+      alias l="ls -lh --git"
+      alias lt="ls -lh --git --tree"

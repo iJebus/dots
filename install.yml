@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  become: true
+
+  vars:
+    - golang_version: '1.9'
+    - nodejs_version: '8.9.3'
+
+  roles:
+    - { role: zsh, tags: 'zsh' }
+    - { role: neovim, tags: 'neovim' }
+    - { role: firefox, tags: 'firefox' }
+    - { role: asdf, tags: 'asdf' }
+    - { role: keybase, tags: 'keybase' }
+    - { role: exa, tags: 'exa' }
+
+  tasks:
+    - name: upgrade system and existing packages
+      apt:
+        upgrade: dist
+        autoclean: true
+        autoremove: true
+        update_cache: true
