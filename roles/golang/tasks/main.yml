@@ -40,3 +40,7 @@
       lineinfile:
         path: ~/.zshrc
         line: 'export GOPATH=~/go'
+
+- name: install vim-go plugins
+  become: false
+  command: vim +GoInstallBinaries +qall
