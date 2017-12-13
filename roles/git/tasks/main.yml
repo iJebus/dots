@@ -1,0 +1,11 @@
+- name: install git
+  apt:
+    name: git
+    state: latest
+    cache_valid_time: 600
+
+- name: deploy git config
+  become: false
+  file:
+    src: gitconfig
+    dest: ~/.gitconfig

@@ -1,0 +1,5 @@
+[user]
+	email = me@ljones.id.au
+	name = Liam Jones
+[core]
+	editor = vim
