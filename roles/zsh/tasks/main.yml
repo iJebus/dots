@@ -19,3 +19,12 @@
 - name: set default shell
   command: chsh -s /usr/bin/zsh liam
   when: zsh|changed
+
+- name: set zsh theme
+  become: false
+  lineinfile:
+    path: ~/.zshrc
+    regexp: '^ZSH_THEME.*$'
+    line: 'ZSH_THEME="juanghurtado"'
+    backrefs: true
+
