@@ -30,36 +30,3 @@
     block: |
       . $HOME/.asdf/asdf.sh
       . $HOME/.asdf/completions/asdf.bash
-
-- name: add plugins
-  become: false
-  shell: asdf plugin-add "{{ item }}"
-  args:
-    executable: /usr/bin/zsh
-  with_items:
-    - golang
-    - nodejs
-  ignore_errors: true
-
-- name: import openpgp keys for nodejs
-  become: false
-  shell: bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-
-- name: install languages
-  become: false
-  shell: asdf install "{{ item }}"
-  args:
-    executable: /usr/bin/zsh
-  with_items:
-    - golang {{ golang_version }}
-    - nodejs {{ nodejs_version }}
-  ignore_errors: true
-
-- name: set languages as global defaults
-  become: false
-  blockinfile:
-    path: ~/.tool-versions
-    create: true
-    block: |
-      golang {{ golang_version }}
-      nodejs {{ nodejs_version }}

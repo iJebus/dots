@@ -1,0 +1,42 @@
+---
+- include_role:
+    name: asdf
+- include_role:
+    name: zsh
+
+- name: add golang plugin
+  become: false
+  shell: asdf plugin-add golang
+  args:
+    executable: /usr/bin/zsh
+  ignore_errors: true
+
+- name: install golang
+  become: false
+  shell: asdf install golang {{ golang_version }}
+  args:
+    executable: /usr/bin/zsh
+  register: golang_install
+  changed_when: '"golang " ~ golang_version ~ " is already installed" not in golang_install.stdout'
+
+- name: set global default golang
+  become: false
+  lineinfile:
+    path: ~/.tool-versions
+    create: true
+    line: golang {{ golang_version }}
+    regexp: '^golang.*'
+
+- name: set gopath
+  become: false
+  block:
+    - name: create gopath folder
+      file:
+        path: ~/go/src
+        state: directory
+        recurse: true
+
+    - name: export gopath
+      lineinfile:
+        path: ~/.zshrc
+        line: 'export GOPATH=~/go'

@@ -1,0 +1,32 @@
+---
+- include_role:
+    name: asdf
+- include_role:
+    name: zsh
+
+- name: add nodejs plugin
+  become: false
+  shell: asdf plugin-add nodejs
+  args:
+    executable: /usr/bin/zsh
+  ignore_errors: true
+
+- name: import openpgp keys for nodejs
+  become: false
+  shell: bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+
+- name: install nodejs
+  become: false
+  shell: asdf install nodejs {{ nodejs_version }}
+  args:
+    executable: /usr/bin/zsh
+  register: nodejs_install
+  changed_when: '"nodejs " ~ nodejs_version ~ " is already installed" not in nodejs_install.stdout'
+
+- name: set default global nodejs
+  become: false
+  lineinfile:
+    path: ~/.tool-versions
+    create: true
+    line: nodejs {{ nodejs_version }}
+    regexp: '^nodejs.*'

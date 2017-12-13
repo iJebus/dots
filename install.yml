@@ -12,6 +12,8 @@
     - { role: neovim, tags: 'neovim' }
     - { role: firefox, tags: 'firefox' }
     - { role: asdf, tags: 'asdf' }
+    - { role: golang, tags: 'golang' }
+    - { role: nodejs, tags: 'nodejs' }
     - { role: keybase, tags: 'keybase' }
     - { role: exa, tags: 'exa' }
     - { role: kr, tags: 'kr' }
