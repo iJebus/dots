@@ -36,10 +36,13 @@
         state: directory
         recurse: true
 
-    - name: export gopath
-      lineinfile:
+    - name: source in zshrc
+      blockinfile:
         path: ~/.zshrc
-        line: 'export GOPATH=~/go'
+        marker: "# {mark} ANSIBLE MANAGED BLOCK - golang"
+        block: |
+          export GOPATH=~/go
+          export PATH=$HOME/go/bin:$PATH
 
 - name: install vim-go plugins
   become: false
