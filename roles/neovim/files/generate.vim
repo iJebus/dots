@@ -625,3 +625,6 @@ endif
 
 set colorcolumn=80
 set cursorline
+set cursorcolumn
+set list!
+set listchars=tab:>-,trail:·
