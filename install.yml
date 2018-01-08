@@ -25,3 +25,10 @@
         autoclean: true
         autoremove: true
         update_cache: true
+      when: ansible_distribution == "Ubuntu"
+
+    - name: upgrade system and existing packages
+      pacman:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_distribution == "Archlinux"

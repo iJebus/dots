@@ -3,9 +3,16 @@
     name: git
     state: latest
     cache_valid_time: 600
+  when: ansible_distribution == "Ubuntu"
+
+- name: install git
+  pacman:
+    name: git
+    state: latest
+  when: ansible_distribution == "Archlinux"
 
 - name: deploy git config
   become: false
-  file:
+  copy:
     src: gitconfig
     dest: ~/.gitconfig

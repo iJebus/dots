@@ -21,6 +21,7 @@
     - libffi-dev
     - libtool
     - unixodbc-dev
+  when: ansible_distribution == "Ubuntu"
 
 - name: source in zshrc
   become: false

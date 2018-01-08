@@ -43,7 +43,3 @@
         block: |
           export GOPATH=~/go
           export PATH=$HOME/go/bin:$PATH
-
-- name: install vim-go plugins
-  become: false
-  command: vim +GoInstallBinaries +qall

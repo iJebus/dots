@@ -1,0 +1,17 @@
+---
+- name: install required apt repos
+  apt_repository:
+    repo: 'ppa:neovim-ppa/stable'
+    state: present
+
+- name: install package goodness
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+  with_items:
+    - neovim
+    - python-dev
+    - python3-dev
+    - python-pip
+    - python3-pip

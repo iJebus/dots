@@ -13,6 +13,8 @@ sudo apt-add-repository ppa:ansible/ansible
 sudo apt-get update
 sudo apt-get install ansible
 ansible-playbook install.yml -K
+# open a new terminal or `source ~/.zshrc` and then...
+vim +PlugInstall +GoInstallBinaries +qall
 ```
 Groovy... 🕶️
 ## Notes

@@ -1,11 +1,19 @@
 ---
-- name: install required apt repos
+- name: add firefox repo
   apt_repository:
     repo: 'ppa:ubuntu-mozilla-daily/firefox-aurora'
     state: present
+  when: ansible_distribution == "Ubuntu"
 
-- name: install package goodness
+- name: install firefox
   apt:
     name: firefox
     state: latest
     update_cache: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: install firefox
+  pacman:
+    name: firefox-developer-edition
+    state: latest
+  when: ansible_distribution == "Archlinux"

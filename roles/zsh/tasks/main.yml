@@ -4,12 +4,20 @@
     name: zsh
     state: present
   register: zsh
+  when: ansible_distribution == "Ubuntu"
 
-- name: install ohmyzsh
+- name: install zsh
+  pacman:
+    name: zsh
+    state: latest
+  register: zsh
+  when: ansible_distribution == "Archlinux"
+
+- name: fetch ohmyzsh repo
   become: false
-  shell: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
-  args:
-    creates: ~/.oh-my-zsh
+  git:
+    repo: git://github.com/robbyrussell/oh-my-zsh.git
+    dest: ~/.oh-my-zsh
   when: zsh|changed
 
 - name: assumes username is liam, proceed?

@@ -1,20 +1,9 @@
-- name: install required apt repos
-  apt_repository:
-    repo: 'ppa:neovim-ppa/stable'
-    state: present
+---
+- include_tasks: install_ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: install package goodness
-  apt:
-    name: "{{ item }}"
-    state: latest
-    update_cache: true
-  with_items:
-    # - fonts-hack-ttf # tasty font
-    - neovim
-    - python-dev
-    - python3-dev
-    - python-pip
-    - python3-pip
+- include_tasks: install_arch.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: install neovim pip packages
   pip:
@@ -38,9 +27,13 @@
     path: "{{ item }}"
     line: 'export VTE_VERSION="100"'
   with_items:
-    - /etc/zsh/zshenv
+    - /etc/zsh/zprofile
     - /etc/profile
 
-- name: install plugins
+- name: source in zshrc
   become: false
-  command: vim +PlugInstall +qall
+  blockinfile:
+    path: ~/.zshrc
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - neovim"
+    block: |
+      alias vim="nvim"

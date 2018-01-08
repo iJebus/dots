@@ -3,6 +3,14 @@
   apt:
     deb: https://prerelease.keybase.io/keybase_amd64.deb
   register: keybase
+  when: ansible_distribution == "Ubuntu"
+
+- name: install keybase
+  pacman:
+    name: keybase
+    state: latest
+  register: keybase
+  when: ansible_distribution == "Archlinux"
 
 - name: finishing install
   become: false

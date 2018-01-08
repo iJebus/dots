@@ -1,0 +1,10 @@
+---
+- name: install package goodness
+  pacman:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+  with_items:
+    - neovim
+    - python-pip
+    - python2-pip
