@@ -1,0 +1,17 @@
+---
+- name: install packages
+  pacman:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - ttf-hack
+    - ttf-symbola
+    - noto-fonts-emoji
+    - htop
+    - vlc-nightly
+  when: ansible_distribution == "Archlinux"
+
+- name: set up emoji font fallback
+  copy:
+    src: local.conf
+    dest: /etc/fonts/local.conf
