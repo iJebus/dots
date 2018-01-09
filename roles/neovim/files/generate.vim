@@ -628,3 +628,4 @@ set cursorline
 set cursorcolumn
 set list!
 set listchars=tab:>-,trail:·
+set backupcopy=yes
