@@ -4,10 +4,12 @@
     name: "{{ item }}"
     state: latest
   with_items:
+    - htop
+    - httpie
+    - noto-fonts-emoji
+    - tmux
     - ttf-hack
     - ttf-symbola
-    - noto-fonts-emoji
-    - htop
     - vlc-nightly
   when: ansible_distribution == "Archlinux"
 
