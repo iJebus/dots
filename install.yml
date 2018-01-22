@@ -18,7 +18,7 @@
     - { role: keybase, tags: 'keybase' }
     - { role: exa, tags: 'exa' }
     - { role: kr, tags: 'kr' }
-    # - { role: alacritty, tags: 'alacritty' }
+    - { role: alacritty, tags: 'alacritty' }
 
   tasks:
     - name: upgrade system and existing packages

@@ -1,0 +1,12 @@
+---
+- name: fetch repo
+  become: false
+  git:
+    repo: https://aur.archlinux.org/alacritty-git.git
+    dest: ~/alacritty-git
+
+- name: install
+  become: false
+  shell: makepkg -isr
+  args:
+    chdir: ~/alacritty-git
