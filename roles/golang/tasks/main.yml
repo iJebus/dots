@@ -26,20 +26,3 @@
     create: true
     line: golang {{ golang_version }}
     regexp: '^golang.*'
-
-- name: set gopath
-  become: false
-  block:
-    - name: create gopath folder
-      file:
-        path: ~/go/src
-        state: directory
-        recurse: true
-
-    - name: source in zshrc
-      blockinfile:
-        path: ~/.zshrc
-        marker: "# {mark} ANSIBLE MANAGED BLOCK - golang"
-        block: |
-          export GOPATH=~/go
-          export PATH=$HOME/go/bin:$PATH
